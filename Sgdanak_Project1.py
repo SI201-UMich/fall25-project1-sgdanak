@@ -61,3 +61,55 @@ for island, species_data in result.items():
         print(f" Species:{species}")
         for sex, pct in sex_data.items():
             print(f"  {sex.capitalize()}: {pct}%")
+
+
+def calculate_avg_flipper_length(data):
+    flipper_sums = {}
+    flipper_counts = {}
+
+    for row in data:
+        island = row['island']
+        species = row['species']
+        sex = row['sex']
+        flipper = row['flipper_length_mm']
+
+        if not flipper or flipper == "NA":
+            continue
+        flipper = float(flipper)
+
+        if island not in flipper_sums:
+            flipper_sums[island] = {}
+            flipper_counts[island] = {}
+        if species not in flipper_sums[island]:
+            flipper_sums[island][species] = {}
+            flipper_counts[island][species] = {}
+        if sex not in flipper_sums[island][species]:
+            flipper_sums[island][species][sex] = 0
+            flipper_counts[island][species][sex] = 0
+
+        flipper_sums[island][species][sex] += flipper
+        flipper_counts[island][species][sex] += 1
+    
+    averages = {}
+    for island in flipper_sums:
+        averages[island] = {}
+        for species in flipper_sums[island]:
+            averages[island][species] = {}
+            for sex in flipper_sums[island][species]:
+                total_length = flipper_sums[island][species][sex]
+                count = flipper_counts[island][species][sex]
+                if count >0:
+                    averages[island][species][sex] = round(total_length /count, 2)
+    return averages
+
+filename = "penguins.csv"
+penguins = open_csv(filename)
+result = calculate_avg_flipper_length(penguins)
+
+for island, species_data in result.items():
+    print (f"\nIsland: {island}")
+    for species, sex_data in species_data.items():
+        print(f" Species: {species}")
+        for sex, avg in sex_data.items():
+            print(f"  {sex.capitalize()}: {avg} mm")
+        
