@@ -1,0 +1,32 @@
+import csv 
+import os
+import unittest
+
+#To test my calculations, I asked ChatGPT to generate a simplified version of my data to get an understanding if my calculations and code is correct.
+class TestCalculations(unittest.TestCase):
+    def setUp(self):
+        self.sample_rows = [
+            {"species": "Adelie",   "island": "Dream",    "sex": "male",   "flipper_length_mm": "180"},
+            {"species": "Adelie",   "island": "Dream",    "sex": "male",   "flipper_length_mm": "200"},
+            {"species": "Adelie",   "island": "Dream",    "sex": "female", "flipper_length_mm": "190"},
+            {"species": "Chinstrap","island": "Dream",    "sex": "female", "flipper_length_mm": "NA"},
+            {"species": "Gentoo",   "island": "Biscoe",   "sex": "female", "flipper_length_mm": "210"},
+            {"species": "Gentoo",   "island": "Biscoe",   "sex": "female", "flipper_length_mm": "220"},
+            {"species": "Gentoo",   "island": "Torgersen","sex": "male",   "flipper_length_mm": "195"},
+        ]
+
+def test_calculate_species_percentage(self):
+    out = calculate_species_percentage(self.sample_rows)
+    self.assertIn("Dream", out)
+    self.assertEqual(out["Dream"]["Adelie"]["male"],100.00)
+    self.assertEqual(out["Dream"]["Adelie"]["female"],50.00)
+    self.assertEqual(out["Dream"]["Chinstrap"]["female"],50.00)
+
+def test_species_pct_general_case_multiple_islands_independent(self):
+    out = calculate_species_percentage(self.sample_rows)
+    self.assertEqual(out["Biscoe"]["Gentoo"]["female"], 100.00)
+
+def test_calculate_species_percentage_edge(self)
+    out = calculate_species_percentage([])
+    self.assertEqual(out, {})
+
